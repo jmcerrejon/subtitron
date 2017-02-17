@@ -1,3 +1,5 @@
+const langs = require('langs')
+
 exports.downloadFile = configuration => {
   var request = require('request')
   var fs = require('fs')
@@ -39,3 +41,5 @@ exports.downloadFile = configuration => {
     })
   })
 }
+
+exports.getIsoLanguage = (lang) => { return langs.where('1', lang)['2'] }

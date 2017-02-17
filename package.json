@@ -21,6 +21,7 @@
   "license": "Donationware",
   "dependencies": {
     "electron": "^1.4.15",
+    "langs": "^1.1.0",
     "opensubtitles-api": "^3.4.1",
     "request": "^2.79.0"
   },

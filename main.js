@@ -1,5 +1,6 @@
 const {app, BrowserWindow} = require('electron')
 const OS = require('opensubtitles-api')
+const helper = require('./helper.js')
 // userAgent change constantly. Check out: http://trac.opensubtitles.org/projects/opensubtitles/wiki/DevReadFirst
 const userAgent = 'OSTestUserAgentTemp'
 const OpenSubtitles = new OS({
@@ -42,11 +43,13 @@ app.on('ready', () => {
 
   // test
   exports.getSubtitle = (fullFile, fileName) => {
-    let dir = fullFile.match(/(.*)[\/\\]/)[1] || ''
+    let dir = fullFile.match(/(.*)[\\/\\]/)[1] || ''
     let destFile = fileName.replace(/\.[^/.]+$/, '') + '.srt'
+    let osLang = app.getLocale().substring(0, 2)
+    let langIso2 = helper.getIsoLanguage(osLang)
     console.log('Getting subtitle: ' + fullFile)
     OpenSubtitles.search({
-      sublanguageid: 'spa',
+      sublanguageid: langIso2,
       filename: fileName,  // The video file name. Better if extension is included.
       // season: '2',
       // episode: '3',
@@ -54,10 +57,7 @@ app.on('ready', () => {
       // imdbid: '528809',           // 'tt528809' is fine too.
     }).then(subtitles => {
       console.log(subtitles)
-      const url = subtitles['es'][0].url
-      console.log('url:' + url)
-
-      const helper = require('./helper.js')
+      const url = subtitles[osLang][0].url
       helper.downloadFile({
         remoteFile: url,
         localFile: `${dir}/${destFile}`

@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>SubtiTron</title>
+  <style>
+    body {
+      margin: 0 0 0 0;
+      /*background: rgb(230, 230, 230);*/
+      -webkit-user-select: none;
+      -webkit-app-region: drag;
+    }
+
+    #txtDrag {
+      margin: 0 0 0 0;
+      color: grey;
+      font-size: 20;
+      position: relative;
+      float: left;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+    }
+
+    #wrapper {
+      margin: 5;
+      width: 350px;
+      height: 200px;
+      border: 5px dashed gray;
+      border-radius: 8px;
+      background-repeat: no-repeat;
+      background-size: 100%;
+    }
+
+    #holder {
+      width: auto;
+      height: 175px;
+    }
+
+    #box2 {
+      height: 25px;
+    }
+
+    #settings {
+      float: right;
+      margin-right: 10px;
+      -webkit-app-region: no-drag;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrapper">
+    <div id="holder">
+      <p id="txtDrag">Drop your video files here</p>
+    </div>
+    <div id="box2">
+      <img id="settings" src="assets/imgs/settings.png" alt="settings" onclick="openSettings()" />
+    </div>
+  </div>
+  <script>
+    const dialog = require('electron').remote.dialog;
+    const main = require('electron').remote.require('./main.js')
+
+    // Check internet
+
+    if (!navigator.onLine) {
+      var result = dialog.showMessageBox({
+      message: 'Please check your network. Internet connection needed.',
+      buttons: ['Ok']
+      });
+    }
+
+    const holder = document.getElementById('holder')
+    holder.ondragover = () => {
+      return false;
+    }
+    holder.ondragleave = holder.ondragend = () => {
+      return false;
+    }
+    holder.ondrop = (e) => {
+      e.preventDefault()
+      for (let f of e.dataTransfer.files) {
+        alert('File type: ' + f.type + ', path: ' + f.path)
+        main.getSubtitle(f.path)
+      }
+      return false;
+    }
+
+    // Settings
+
+    function openSettings() {
+      alert("to be implemented!");
+    }
+
+    // Arguments
+
+    const { remote } = require('electron'),
+           arguments = remote.getGlobal('arguments').args;
+
+    console.log(arguments);
+  </script>
+</body>
+
+</html>

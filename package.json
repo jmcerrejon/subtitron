@@ -1,0 +1,30 @@
+{
+  "name": "subtitron",
+  "version": "0.0.1",
+  "description": "App based on Electron to download subtitle files from Opensubtitles",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "startargs": "electron .",
+    "test": "standard && node main.js",
+    "testfix": "standard --fix && node helper.js"
+  },
+  "keywords": [
+    "electron",
+    "subtitles",
+    "media",
+    "movies",
+    "opensubtitles",
+    "vos"
+  ],
+  "author": "Jose Manuel Cerrejon Gonzalez",
+  "license": "Donationware",
+  "dependencies": {
+    "electron": "^1.4.15",
+    "opensubtitles-api": "^3.4.1",
+    "request": "^2.79.0"
+  },
+  "devDependencies": {
+    "standard": "^8.6.0"
+  }
+}

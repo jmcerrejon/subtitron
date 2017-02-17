@@ -1,8 +1,17 @@
-## SubtiTron
+<h1 align="center">
+  <img src="screenshot01.png" alt="Subtitron">
+  <br>
+  SubtiTron
+  <br>
+  <br>
+</h1>
 
-![SubtiTron](screenshot01.png)
+<p align="center">
+  <a href="http://standardjs.com"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Standard - JavaScript Style Guide"></a>
+  <a href="https://www.npmjs.com/package/standard"><img src="https://img.shields.io/npm/v/standard.svg" alt="npm version"></a>
+</p>
 
-### What?
+### What is it?
 
 App based on Electron to **download subtitle** files from *Opensubtitles*.
 

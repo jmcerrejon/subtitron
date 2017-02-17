@@ -83,8 +83,8 @@
     holder.ondrop = (e) => {
       e.preventDefault()
       for (let f of e.dataTransfer.files) {
-        alert('File type: ' + f.type + ', path: ' + f.path)
-        main.getSubtitle(f.path)
+        // alert('File type: ' + f.type + ', path: ' + f.path)
+        main.getSubtitle(f.path, f.name)
       }
       return false;
     }

@@ -41,11 +41,13 @@ app.on('ready', () => {
   })
 
   // test
-  exports.getSubtitle = (fullFile) => {
+  exports.getSubtitle = (fullFile, fileName) => {
+    let dir = fullFile.match(/(.*)[\/\\]/)[1] || ''
+    let destFile = fileName.replace(/\.[^/.]+$/, '') + '.srt'
     console.log('Getting subtitle: ' + fullFile)
     OpenSubtitles.search({
       sublanguageid: 'spa',
-      filename: 'Mechanic Resurrection.mp4',  // The video file name. Better if extension is included.
+      filename: fileName,  // The video file name. Better if extension is included.
       // season: '2',
       // episode: '3',
       limit: '3'                 // Can be 'best', 'all' or an
@@ -58,7 +60,7 @@ app.on('ready', () => {
       const helper = require('./helper.js')
       helper.downloadFile({
         remoteFile: url,
-        localFile: '/Volumes/osx/Users/ulysess/Downloads/Mechanic Resurrection.srt'
+        localFile: `${dir}/${destFile}`
       }).then(function () {
         console.log('File succesfully downloaded')
       })

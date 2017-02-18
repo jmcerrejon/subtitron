@@ -42,4 +42,43 @@ exports.downloadFile = configuration => {
   })
 }
 
-exports.getIsoLanguage = (lang) => { return langs.where('1', lang)['2'] }
+exports.getIsoLanguage = lang => { return langs.where('1', lang)['2'] }
+
+exports.infoFromVideo = videoFile => {
+  return {
+    name: 'Trainspotting',
+    hash: '',
+    fileSize: '2726758444'
+  }
+}
+
+exports.infoFromTVShow = videoFile => {
+  return {
+    file: videoFile,
+    name: getMovieName(videoFile),
+    season: getSeason(videoFile),
+    episode: getEpisode((videoFile)),
+    quality: 'hdtv',
+    group: 'lol',
+    hash: '',
+    fileSize: ''
+  }
+}
+
+const getMovieName = videoFile => {
+  return regExpr(videoFile, '(\\d{3,4}p)?')
+}
+
+const getSeason = videoFile => {
+  return regExpr(videoFile, 'S(\\d{1,2})')
+}
+
+const getEpisode = videoFile => {
+  return regExpr(videoFile, 'E(\\d{1,2})')
+}
+
+const regExpr = (string, expression) => {
+  const myRe = new RegExp(expression, 'g')
+  const result = myRe.exec(string)
+  return (Array.isArray(result)) ? result[1] : ''
+}

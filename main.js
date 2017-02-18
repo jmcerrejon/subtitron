@@ -1,5 +1,6 @@
 const {app, BrowserWindow} = require('electron')
 const OS = require('opensubtitles-api')
+const isVideo = require('is-video');
 const helper = require('./helper.js')
 // userAgent change constantly. Check out: http://trac.opensubtitles.org/projects/opensubtitles/wiki/DevReadFirst
 const userAgent = 'OSTestUserAgentTemp'
@@ -41,13 +42,22 @@ app.on('ready', () => {
     console.dir('arg:' + arg)
   })
 
-  // test
+  // Settings
+  exports.openSettings = () => {
+    // var file = 'arrow.512.hdtv-lol'
+    // var file = 'Supergirl.S02E12.720p.HDTV.X264-DIMENSION.mkv'
+    var file = 'The.Newsroom.2012.S02E06.720p.HDTV.x264-KILLERS.mkv'
+    console.log(helper.infoFromTVShow(file))
+  }
+
   exports.getSubtitle = (fullFile, fileName) => {
+    if (!isVideo(fullFile)) {
+      return
+    }
     let dir = fullFile.match(/(.*)[\\/\\]/)[1] || ''
     let destFile = fileName.replace(/\.[^/.]+$/, '') + '.srt'
     let osLang = app.getLocale().substring(0, 2)
     let langIso2 = helper.getIsoLanguage(osLang)
-    console.log('Getting subtitle: ' + fullFile)
     OpenSubtitles.search({
       sublanguageid: langIso2,
       filename: fileName,  // The video file name. Better if extension is included.
@@ -62,7 +72,7 @@ app.on('ready', () => {
         remoteFile: url,
         localFile: `${dir}/${destFile}`
       }).then(function () {
-        console.log('File succesfully downloaded')
+        console.log('File succesfully downloaded.')
       })
     })
   }

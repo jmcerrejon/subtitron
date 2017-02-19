@@ -50,9 +50,11 @@ npm start
 
 * Auto-update app when new release is ready.
 
-* Petitions are welcome.
-
 * Save subtitles in another folder if movie file is in a only read storage device.
+
+* Drag an entire folder to search all movie/tvshow subtitles inside it.
+
+* Petitions are welcome.
 
 ### Interesting links that help/inspire me
 

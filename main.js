@@ -1,6 +1,5 @@
 const {app, BrowserWindow} = require('electron')
 const OS = require('opensubtitles-api')
-const isVideo = require('is-video');
 const helper = require('./helper.js')
 // userAgent change constantly. Check out: http://trac.opensubtitles.org/projects/opensubtitles/wiki/DevReadFirst
 const userAgent = 'OSTestUserAgentTemp'
@@ -51,9 +50,10 @@ app.on('ready', () => {
   }
 
   exports.getSubtitle = (fullFile, fileName) => {
-    if (!isVideo(fullFile)) {
+    if (!helper.isVideo(fullFile)) {
       return
     }
+    console.log(`Checking file: ${fileName}...`)
     let dir = fullFile.match(/(.*)[\\/\\]/)[1] || ''
     let destFile = fileName.replace(/\.[^/.]+$/, '') + '.srt'
     let osLang = app.getLocale().substring(0, 2)

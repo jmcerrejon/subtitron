@@ -1,4 +1,4 @@
-const {app, BrowserWindow} = require('electron')
+const {app, Menu, BrowserWindow} = require('electron')
 const OS = require('opensubtitles-api')
 const helper = require('./helper.js')
 // userAgent change constantly. Check out: http://trac.opensubtitles.org/projects/opensubtitles/wiki/DevReadFirst
@@ -8,19 +8,25 @@ const OpenSubtitles = new OS({
   ssl: true
 })
 
-let mainWindow
+let mainWindow = null
+
+app.on('window-all-closed', app.quit)
 
 global.arguments = {
   args: process.argv
 }
 
 app.on('ready', () => {
+  Menu.setApplicationMenu(null)
+
   mainWindow = new BrowserWindow({
     title: false,
     width: 360,
-    height: 232,
-    // resizable: false,
-    maximizable: false,
+    height: 212,
+    useContentSize: true,
+    resizable: false,
+    fullscreen: false,
+    titleBarStyle: 'hidden-inset',
     alwaysOnTop: true,
     vibrancy: 'dark',
     icon: 'assets/icons/defaultIcon.ico',
@@ -30,6 +36,7 @@ app.on('ready', () => {
     }
   })
   mainWindow.loadURL(`file://${__dirname}/index.html`)
+
   mainWindow.on('closed', () => {
     mainWindow = null
   })

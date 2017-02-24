@@ -65,11 +65,7 @@ exports.infoFromTVShow = videoFile => {
   }
 }
 
-exports.isVideo = fileName => {
-  var videoFormats = ['.mkv', '.avi', '.mp4', '.wmv', '.mov', '.mpg', '.mpeg', '.m4v']
-  var extension = regExpr(fileName, '(\\.[^.]+)$')
-  return videoFormats.includes(extension)
-}
+exports.isVideo = fileName => fileName.toLowerCase().match(/\.(avi|mp4|mkv|mov|flv|wmv)$/)
 
 const getMovieName = videoFile => {
   return regExpr(videoFile, '(\\d{3,4}p)?')

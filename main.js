@@ -8,6 +8,8 @@ const OpenSubtitles = new OS({
   ssl: true
 })
 
+require('electron-reload')(__dirname)
+
 let mainWindow = null
 
 app.on('window-all-closed', app.quit)
@@ -30,16 +32,23 @@ app.on('ready', () => {
     alwaysOnTop: true,
     vibrancy: 'dark',
     icon: 'assets/icons/defaultIcon.ico',
-
+    show: false,
     webPreferences: {
       defaultFontSize: 25
     }
   })
-  mainWindow.loadURL(`file://${__dirname}/index.html`)
 
   mainWindow.on('closed', () => {
     mainWindow = null
   })
+
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show()
+  })
+
+  // Prevent external resources from being loaded (like images)
+  // when dropping them on the WebView.
+  mainWindow.webContents.on('will-navigate', event => event.preventDefault())
 
   // mainWindow.webContents.openDevTools()
 
@@ -47,6 +56,8 @@ app.on('ready', () => {
   process.argv.forEach((arg) => {
     console.dir('arg:' + arg)
   })
+
+  mainWindow.loadURL(`file://${__dirname}/index.html`)
 
   // Settings
   exports.openSettings = () => {

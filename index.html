@@ -5,26 +5,42 @@
   <meta charset="utf-8">
   <title>SubtiTron</title>
   <style>
+    * {
+      cursor: default;
+    }
     body {
       margin: 0 0 0 0;
       /*background: rgb(230, 230, 230);*/
       -webkit-user-select: none;
       -webkit-app-region: drag;
+      font: caption;
     }
-
+    select {
+      -webkit-app-region: no-drag;
+    }
     #txtDrag {
       margin: 0 0 0 0;
       color: grey;
-      font-size: 20;
+      font-size: 1.5em;
       position: relative;
       float: left;
-      top: 50%;
+      top: 56%;
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: -1;
     }
-
-    #wrapper {
+    #txtVersion {
+      margin: 0 0 0 0;
+      color: grey;
+      font-size: 1em;
+      position: relative;
+      float: left;
+      top: 35%;
+      left: 10%;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+    }
+    .wrapper {
       margin: 5;
       width: 350px;
       height: 200px;
@@ -33,16 +49,13 @@
       background-repeat: no-repeat;
       background-size: 100%;
     }
-
     #holder {
       width: auto;
       height: 175px;
     }
-
     #box2 {
       height: 25px;
     }
-
     #settings {
       float: right;
       margin-right: 10px;
@@ -52,17 +65,31 @@
 </head>
 
 <body>
-  <div id="wrapper">
+  <div class="wrapper" id="main">
+    <div id="holder">
+      <p id="txtDrag">Drop your video files here</p>
+    </div>
+    <div id="box2">
+      <span id="txtVersion"></span>
+      <img id="settings" src="assets/imgs/settings.png" alt="settings" onclick="openSettings()" />
+    </div>
+  </div>
+  <!-- <div class id="settingsScrn">
     <div id="holder">
       <p id="txtDrag">Drop your video files here</p>
     </div>
     <div id="box2">
       <img id="settings" src="assets/imgs/settings.png" alt="settings" onclick="openSettings()" />
     </div>
-  </div>
+  </div> -->
   <script>
-    const dialog = require('electron').remote.dialog;
-    const main = require('electron').remote.require('./main.js')
+    const { remote } = require('electron'),
+      appVersion = remote.app.getVersion(),
+      arguments = remote.getGlobal('arguments').args
+    const dialog = remote.dialog
+    const main = remote.require('./main.js')
+
+    document.getElementById('txtVersion').innerHTML = `Ver ${appVersion}`
 
     // Check internet
 
@@ -75,18 +102,17 @@
 
     const holder = document.getElementById('holder')
     holder.ondragover = () => {
-      return false;
+      return false
     }
     holder.ondragleave = holder.ondragend = () => {
-      return false;
+      return false
     }
     holder.ondrop = (e) => {
-      e.preventDefault()
       for (let f of e.dataTransfer.files) {
         // alert('File type: ' + f.type + ', path: ' + f.path)
         main.getSubtitle(f.path, f.name)
       }
-      return false;
+      return false
     }
 
     // Settings
@@ -94,13 +120,6 @@
     function openSettings() {
       main.openSettings()
     }
-
-    // Arguments
-
-    const { remote } = require('electron'),
-           arguments = remote.getGlobal('arguments').args;
-
-    console.log(arguments);
   </script>
 </body>
 

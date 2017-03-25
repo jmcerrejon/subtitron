@@ -9,7 +9,9 @@
 
 * Added electron-reload package.
 
-* License changed to Creative Commons Attribution-ShareAlike 4.0
+* License changed to Creative Commons Attribution-ShareAlike 4.0.
+
+* Added Menu & Version number.
 
 0.0.3
 =====

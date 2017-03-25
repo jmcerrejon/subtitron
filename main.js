@@ -1,4 +1,5 @@
-const {app, Menu, BrowserWindow} = require('electron')
+// Declare some variables
+const {app, BrowserWindow, Menu} = require('electron')
 const OS = require('opensubtitles-api')
 const helper = require('./helper.js')
 // userAgent change constantly. Check out: http://trac.opensubtitles.org/projects/opensubtitles/wiki/DevReadFirst
@@ -7,27 +8,35 @@ const OpenSubtitles = new OS({
   useragent: userAgent,
   ssl: true
 })
+let mainWindow
+let menu = Menu.buildFromTemplate([{
+  label: app.getName(),
+  submenu: [{
+    role: 'quit'
+  }]
+}])
 
-require('electron-reload')(__dirname)
-
-let mainWindow = null
-
-app.on('window-all-closed', app.quit)
+// Testing
 
 global.arguments = {
   args: process.argv
 }
+require('electron-reload')(__dirname)
+
+// End Testing
+
+app.on('window-all-closed', app.quit)
 
 app.on('ready', () => {
-  Menu.setApplicationMenu(null)
-
   mainWindow = new BrowserWindow({
-    title: false,
+    title: 'SubtiTron',
+    center: true,
     width: 360,
     height: 212,
     useContentSize: true,
     resizable: false,
-    fullscreen: false,
+    minimizable: false,
+    maximizable: false,
     titleBarStyle: 'hidden-inset',
     alwaysOnTop: true,
     vibrancy: 'dark',
@@ -37,6 +46,8 @@ app.on('ready', () => {
       defaultFontSize: 25
     }
   })
+
+  Menu.setApplicationMenu(menu)
 
   mainWindow.on('closed', () => {
     mainWindow = null
@@ -50,7 +61,7 @@ app.on('ready', () => {
   // when dropping them on the WebView.
   mainWindow.webContents.on('will-navigate', event => event.preventDefault())
 
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   // arguments
   process.argv.forEach((arg) => {

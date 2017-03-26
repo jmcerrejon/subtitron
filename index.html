@@ -41,13 +41,7 @@
       z-index: -1;
     }
     .wrapper {
-      margin: 5;
-      width: 350px;
-      height: 200px;
       border: 5px dashed gray;
-      border-radius: 8px;
-      background-repeat: no-repeat;
-      background-size: 100%;
     }
     #holder {
       width: auto;
@@ -85,9 +79,9 @@
   <script>
     const { remote } = require('electron'),
       appVersion = remote.app.getVersion(),
-      arguments = remote.getGlobal('arguments').args
-    const dialog = remote.dialog
-    const main = remote.require('./main.js')
+      arguments = remote.getGlobal('arguments').args,
+      dialog = remote.dialog,
+      main = remote.require('./main.js')
 
     document.getElementById('txtVersion').innerHTML = `Ver ${appVersion}`
 
@@ -101,12 +95,10 @@
     }
 
     const holder = document.getElementById('holder')
-    holder.ondragover = () => {
+    holder.ondragover = holder.ondragleave = holder.ondragend = () => {
       return false
     }
-    holder.ondragleave = holder.ondragend = () => {
-      return false
-    }
+
     holder.ondrop = (e) => {
       for (let f of e.dataTransfer.files) {
         // alert('File type: ' + f.type + ', path: ' + f.path)

@@ -16,22 +16,24 @@
 
 App based on Electron to **download subtitle** files from *Opensubtitles*.
 
-**NOTE:** This is a **initial alpha release** 0.0.x and of course, it doesn't works yet.
+**NOTE:** This is a **initial alpha release** 0.0.x. It works only with tv shows and not very accuracy.
 
 ### Features/Goals
 
 Drop video files to get subtitles in the default language of your operating system.
 
+You can donate some money to me if you want. Click on icon *Buy Me a Coffee* below. Thank you!.
+
 ### Install and use
 
 ```
-npm install
+npm i
 npm start
 ```
 
 ### TODO
 
-* All logic to download subtitles.
+* Improve logic to download subtitles.
 
 * Settings pane.
 
@@ -71,7 +73,7 @@ npm start
 
 ### License
 
-This app is **Donationware**, so you can use and donate some money to me (if you want).
+This app is **Creative Commons Attribution-ShareAlike 4.0 International**.
 
 ### Code Style
 

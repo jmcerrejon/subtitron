@@ -1,4 +1,5 @@
 const langs = require('langs')
+const parser = require('episode-parser')
 
 exports.downloadFile = configuration => {
   var request = require('request')
@@ -53,34 +54,14 @@ exports.infoFromVideo = videoFile => {
 }
 
 exports.infoFromTVShow = videoFile => {
-  return {
-    file: videoFile,
-    name: getMovieName(videoFile),
-    season: getSeason(videoFile),
-    episode: getEpisode((videoFile)),
-    quality: 'hdtv',
-    group: 'lol',
-    hash: '',
-    fileSize: ''
-  }
+  return parser(videoFile)
 }
 
 exports.isVideo = fileName => fileName.toLowerCase().match(/\.(avi|mp4|mkv|mov|flv|wmv)$/)
 
-const getMovieName = videoFile => {
-  return regExpr(videoFile, '(\\d{3,4}p)?')
-}
-
-const getSeason = videoFile => {
-  return regExpr(videoFile, 'S(\\d{1,2})')
-}
-
-const getEpisode = videoFile => {
-  return regExpr(videoFile, 'E(\\d{1,2})')
-}
-
-const regExpr = (string, expression) => {
-  const myRe = new RegExp(expression, 'g')
-  const result = myRe.exec(string)
-  return (Array.isArray(result)) ? result[1] : ''
-}
+// const regExpr = (string, expression) => {
+//   // Example: regExpr(videoFile, 'S(\\d{1,2})')
+//   const myRe = new RegExp(expression, 'g')
+//   const result = myRe.exec(string)
+//   return (Array.isArray(result)) ? result[1] : ''
+// }

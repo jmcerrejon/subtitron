@@ -1,6 +1,7 @@
 // Declare some variables
 const {app, BrowserWindow, Menu} = require('electron')
 const OpenSubtitles = require('opensubtitles-api')
+const storage = require('electron-json-storage')
 const helper = require('./helper.js')
 // userAgent change constantly. Check out: http://trac.opensubtitles.org/projects/opensubtitles/wiki/DevReadFirst
 const userAgent = 'OSTestUserAgentTemp'
@@ -12,12 +13,29 @@ let menu = Menu.buildFromTemplate([{
     role: 'quit'
   }]
 }])
+let user
 
 // Testing
 
-global.arguments = {
-  args: process.argv
-}
+// User settings
+storage.has('user', (error, hasKey) => {
+  if (error) {
+    storage.set('user', {
+      lang: app.getLocale().substring(0, 2)
+    }, (error) => {
+      if (error) throw error
+    })
+    return
+  }
+
+  if (hasKey) {
+    storage.get('user', (error, data) => {
+      if (error) throw error
+      user = data
+    })
+  }
+})
+
 require('electron-reload')(__dirname)
 
 // End Testing
@@ -87,40 +105,32 @@ app.on('ready', () => {
     }
     let dir = fullFile.match(/(.*)[\\/\\]/)[1] || ''
     let destFile = fileName.replace(/\.[^/.]+$/, '') + '.srt'
-    let osLang = app.getLocale().substring(0, 2)
-    let langIso2 = helper.getIsoLanguage(osLang)
-    console.log(`Searching subtitle for ${result.show} with lang=${langIso2}`)
 
     // Search the subtitle. Best in a file apart when it's done
-    OS.hash(fullFile).then(infos => {
-      console.log(infos.moviehash, infos.moviebytesize)
-      let querySearch = {
-        query: result.show,
-        sublanguageid: langIso2,
-        // hash: infos.moviehash,
-        // filesize: infos.moviebytesize,
-        // filename: fileName,  // The video file name. Better if extension is included.
-        season: result.season,
-        episode: result.episode,
-        limit: '1',                 // Can be 'best', 'all' or an
-        // imdbid: 'tt0314979'
+    let querySearch = {
+      query: result.show,
+      sublanguageid: helper.getIsoLanguage(user.lang),
+      season: result.season,
+      episode: result.episode,
+      limit: '1'                 // Can be 'best', 'all' or a number
+    }
+    console.log('Querying...', querySearch)
+
+    OS.search(querySearch).then(subtitles => {
+      console.log(subtitles)
+      if (Object.keys(subtitles).length === 0) {
+        console.log('No result')
+        return
       }
-      console.log(querySearch)
-      OS.search(querySearch).then(subtitles => {
-        console.log(subtitles)
-        if (Object.keys(subtitles).length === 0) {
-          console.log('No result')
-          return
-        }
-        const url = subtitles[osLang][0].url
-        helper.downloadFile({
-          remoteFile: url,
-          localFile: `${dir}/${destFile}`
-        }).then(function () {
-          console.log('File succesfully downloaded.')
-        })
+      const url = subtitles[user.lang][0].url
+      helper.downloadFile({
+        remoteFile: url,
+        localFile: `${dir}/${destFile}`
+      }).then(function () {
+        console.log('File succesfully downloaded.')
       })
     })
-    // End search subtitle
+
+  // End search subtitle
   }
 })

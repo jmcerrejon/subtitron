@@ -1,3 +1,12 @@
+0.0.5
+=====
+
+* Working download TV Show subtitle :)
+
+* Added package electron-json-storage
+
+* Save user to persist mode
+
 0.0.4
 =====
 

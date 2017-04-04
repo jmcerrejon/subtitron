@@ -76,43 +76,7 @@
       <img id="settings" src="assets/imgs/settings.png" alt="settings" onclick="openSettings()" />
     </div>
   </div> -->
-  <script>
-    const { remote } = require('electron'),
-      appVersion = remote.app.getVersion(),
-      arguments = remote.getGlobal('arguments').args,
-      dialog = remote.dialog,
-      main = remote.require('./main.js')
-
-    document.getElementById('txtVersion').innerHTML = `Ver ${appVersion}`
-
-    // Check internet
-
-    if (!navigator.onLine) {
-      var result = dialog.showMessageBox({
-      message: 'Please check your network. Internet connection needed.',
-      buttons: ['Ok']
-      });
-    }
-
-    const holder = document.getElementById('holder')
-    holder.ondragover = holder.ondragleave = holder.ondragend = () => {
-      return false
-    }
-
-    holder.ondrop = (e) => {
-      for (let f of e.dataTransfer.files) {
-        // alert('File type: ' + f.type + ', path: ' + f.path)
-        main.getSubtitle(f.path, f.name)
-      }
-      return false
-    }
-
-    // Settings
-
-    function openSettings() {
-      main.openSettings()
-    }
-  </script>
+  <script src="index.js"></script>
 </body>
 
 </html>

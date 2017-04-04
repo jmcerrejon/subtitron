@@ -1,6 +1,6 @@
 {
   "name": "subtitron",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "App based on Electron to download subtitle files from Opensubtitles",
   "main": "main.js",
   "scripts": {
@@ -24,6 +24,7 @@
   },
   "license": "CC-BY-SA-4.0",
   "dependencies": {
+    "electron-json-storage": "^3.0.4",
     "episode-parser": "^1.2.0",
     "langs": "^2.0.0",
     "opensubtitles-api": "^4.0.0-rc1",

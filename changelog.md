@@ -1,11 +1,13 @@
 0.0.5
 =====
 
-* Working download TV Show subtitle :)
+* Working download TV Show subtitles :)
 
 * Added package electron-json-storage
 
 * Save user to persist mode
+
+* Added menu settings, but it's not functional.
 
 0.0.4
 =====

@@ -1,14 +1,17 @@
 const { remote } = require('electron')
-const appVersion = remote.app.getVersion(),
-  // args = remote.getGlobal('arguments').args,
-  dialog = remote.dialog,
-  main = remote.require('./main.js')
+const appVersion = remote.app.getVersion()
+const dialog = remote.dialog
+const main = remote.require('./main.js')
 
 document.getElementById('txtVersion').innerHTML = `Ver ${appVersion}`
 
-// Check internet
+// Check internet connectivity
+window.addEventListener('online', () => {
+  console.log('Online')
+})
 
-if (!navigator.onLine) {
+window.addEventListener('offline', () => {
+  console.log('Offline')
   let result = dialog.showMessageBox({
     message: 'Please check your network. Internet connection needed.',
     buttons: ['Ok']
@@ -16,9 +19,10 @@ if (!navigator.onLine) {
   if (result === 0) {
     result = null
   }
-}
+})
 
 const holder = document.getElementById('holder')
+
 holder.ondragover = holder.ondragleave = holder.ondragend = () => {
   return false
 }

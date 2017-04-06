@@ -1,6 +1,6 @@
 {
   "name": "subtitron",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "App based on Electron to download subtitle files from Opensubtitles",
   "main": "main.js",
   "scripts": {
@@ -31,7 +31,7 @@
     "request": "^2.79.0"
   },
   "devDependencies": {
-    "electron": "^1.6.2",
+    "electron": "^1.4.16",
     "electron-reload": "^1.1.0",
     "standard": "^9.0.2"
   }

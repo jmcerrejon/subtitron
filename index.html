@@ -4,9 +4,11 @@
   <meta charset="utf-8">
   <title>SubtiTron</title>
   <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.0/gh-fork-ribbon.min.css" />
 </head>
 <body>
   <div class="wrapper" id="mainWin">
+    <a class="github-fork-ribbon" title="Alpha version!">Alpha version!</a>
     <div class="holder" id="holder">
       <p id="txtDrag">Drop your video files here</p>
     </div>
@@ -16,9 +18,9 @@
   <div class="wrapper" id="secondWin">
     <div class="holder">
       <p id="txtSelectFlag">Choose a language</p>
-      <select id="selFlag">
-          <option value="en">English</option>
-          <option value="es">Spanish</option>
+      <select id="selFlag" onchange="changeLocale()">
+          <option id="en" value="en">English</option>
+          <option id="es" value="es">Spanish</option>
       </select>
       <div id="boxClose">
         <a href="#mainWin" class="myButton">Close</a>

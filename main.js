@@ -16,8 +16,14 @@ let menu = Menu.buildFromTemplate([{
 let user
 
 // Testing
+require('electron-reload')(__dirname)
+// End Testing
 
 // User settings
+exports.setUserLang = (lang) => {
+  user.lang = lang
+}
+
 storage.has('user', (error, hasKey) => {
   if (error) {
     storage.set('user', {
@@ -36,10 +42,6 @@ storage.has('user', (error, hasKey) => {
   }
 })
 
-require('electron-reload')(__dirname)
-
-// End Testing
-
 app.on('window-all-closed', app.quit)
 
 app.on('ready', () => {
@@ -47,6 +49,7 @@ app.on('ready', () => {
     title: 'SubtiTron',
     center: true,
     width: 360,
+    // height: 424,
     height: 212,
     useContentSize: true,
     resizable: false,

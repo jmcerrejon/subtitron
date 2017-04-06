@@ -1,11 +1,18 @@
+0.0.6
+=====
+
+* Alpha ribbon.
+
+* Now you can set the locale language for download subtitle in settings.
+
 0.0.5
 =====
 
-* Working download TV Show subtitles :)
+* Working download TV Show subtitles. :)
 
-* Added package electron-json-storage
+* Added package electron-json-storage.
 
-* Save user to persist mode
+* Save user to persist mode.
 
 * Added menu settings, but it's not functional.
 
@@ -14,7 +21,7 @@
 
 * Update Electron to 1.6.2.
 
-* Improvements on Main process side
+* Improvements on Main process side.
 
 * Removed Electron from dependencies and added to devDependencies.
 

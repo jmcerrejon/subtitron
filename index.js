@@ -4,10 +4,9 @@ const appVersion = remote.app.getVersion()
 const dialog = remote.dialog
 const main = remote.require('./main.js')
 
-document.getElementById('txtVersion').innerHTML = `Ver ${appVersion}`
+document.getElementById('txtVersion').innerText = `Ver ${appVersion}`
 
 // Check internet connectivity
-
 window.addEventListener('online', () => {
   console.log('Online')
 })
@@ -23,8 +22,24 @@ window.addEventListener('offline', () => {
   }
 })
 
-// Drag file(s)
+/* Localize texts
+ * @param {string} obj
+ * @param {array} obj
+ * @return none
+ */
+function localize (obj) {
+  if (typeof obj === 'string') {
+    document.getElementById(obj).innerText = main.L(obj)
+    return
+  }
 
+  obj.forEach((item) => {
+    document.getElementById(item).innerText = main.L(item)
+  })
+}
+localize(['txtDrag', 'txtSelectFlag', 'closeBtn'])
+
+// Drag file(s)
 const holder = document.getElementById('holder')
 holder.ondragover = holder.ondragleave = holder.ondragend = () => {
   return false
@@ -38,7 +53,6 @@ holder.ondrop = (e) => {
 }
 
 // Settings
-
 function openSettings () {
   main.openSettings()
 }

@@ -3,17 +3,41 @@ const {app, BrowserWindow, Menu} = require('electron')
 const OpenSubtitles = require('opensubtitles-api')
 const storage = require('electron-json-storage')
 const helper = require('./helper.js')
+const i18next = require('i18next')
+const Backend = require('i18next-sync-fs-backend')
 // userAgent change constantly. Check out: http://trac.opensubtitles.org/projects/opensubtitles/wiki/DevReadFirst
 const userAgent = 'OSTestUserAgentTemp'
 const OS = new OpenSubtitles(userAgent)
 let mainWindow
+let user
+
+/*
+ *  Init System
+ */
+
+// Menu
 let menu = Menu.buildFromTemplate([{
   label: app.getName(),
   submenu: [{
     role: 'quit'
   }]
 }])
-let user
+
+// Localization
+i18next
+  .use(Backend)
+  .init({
+    lng: app.getLocale().substring(0, 2),
+    fallbackLng: 'en',
+    initImmediate: false,
+    'backend': {
+      'loadPath': 'locales/{{lng}}/{{ns}}.json'
+    }
+  })
+
+exports.L = (key) => {
+  return i18next.t(key)
+}
 
 // Testing
 require('electron-reload')(__dirname)
@@ -45,11 +69,10 @@ storage.has('user', (error, hasKey) => {
 app.on('window-all-closed', app.quit)
 
 app.on('ready', () => {
-  mainWindow = new BrowserWindow({
+  let bwOptions = {
     title: 'SubtiTron',
     center: true,
     width: 360,
-    // height: 424,
     height: 212,
     useContentSize: true,
     resizable: false,
@@ -57,13 +80,15 @@ app.on('ready', () => {
     maximizable: false,
     titleBarStyle: 'hidden-inset',
     alwaysOnTop: true,
-    vibrancy: 'dark',
     icon: 'assets/icons/defaultIcon.ico',
     show: false,
     webPreferences: {
       defaultFontSize: 25
     }
-  })
+  }
+  process.platform === 'darwin' ? bwOptions.vibrancy = 'dark' : bwOptions.backgroundColor = '#292934'
+
+  mainWindow = new BrowserWindow(bwOptions)
 
   Menu.setApplicationMenu(menu)
 
@@ -133,7 +158,6 @@ app.on('ready', () => {
         console.log('File succesfully downloaded.')
       })
     })
-
   // End search subtitle
   }
 })

@@ -33,11 +33,15 @@ npm start
 
 ### TODO
 
-* Improve logic to download subtitles.
+* ~~Improve logic to download subtitles.~~
 
-* Settings pane.
+* ~~Settings pane.~~
 
-* Pass video files like arguments to the app.
+* Translate the app to others languages. Only spanish and english (the last one is the default language).
+
+* Pass video files as arguments to the app.
+
+* Drag folder(s) too.
 
 ### Notes
 
@@ -46,8 +50,6 @@ npm start
 ### Some ideas to the future of the app
 
 * Download subtitles from *tusubtitulo.com*.
-
-* Translate the app to another languages.
 
 * Open dialog to load video files.
 

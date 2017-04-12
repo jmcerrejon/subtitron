@@ -37,7 +37,7 @@ npm start
 
 * ~~Settings pane.~~
 
-* Translate the app to others languages. Only spanish and english (the last one is the default language).
+* ~~Translate the app to others languages. Only spanish and english (the last one is the default language).~~
 
 * Pass video files as arguments to the app.
 

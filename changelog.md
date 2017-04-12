@@ -1,3 +1,10 @@
+0.0.7
+=====
+
+* Improved user interface for Windows, but it's not perfect.
+
+* Fixed download subtitles (Windows).
+
 0.0.6
 =====
 

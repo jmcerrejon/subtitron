@@ -40,7 +40,10 @@ exports.L = (key) => {
 }
 
 // Testing
-require('electron-reload')(__dirname)
+if (process.platform === 'darwin') {
+  require('electron-reload')(__dirname)
+}
+
 // End Testing
 
 // User settings
@@ -73,12 +76,13 @@ app.on('ready', () => {
     title: 'SubtiTron',
     center: true,
     width: 360,
-    height: 212,
+    height: process.platform === 'win32' ? 240 : 212,
     useContentSize: true,
     resizable: false,
     minimizable: false,
     maximizable: false,
     titleBarStyle: 'hidden-inset',
+    // frame: false, // Disable frame on Win, Mac (tested) in opposite of titleBarStyle
     alwaysOnTop: true,
     icon: 'assets/icons/defaultIcon.ico',
     show: false,
@@ -90,7 +94,12 @@ app.on('ready', () => {
 
   mainWindow = new BrowserWindow(bwOptions)
 
-  Menu.setApplicationMenu(menu)
+  // Menu according to the OS
+  if (process.platform === 'darwin') {
+    Menu.setApplicationMenu(menu)
+  } else {
+    mainWindow.setMenu(null)
+  }
 
   mainWindow.on('closed', () => {
     mainWindow = null

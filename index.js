@@ -1,4 +1,4 @@
-const { remote } = require('electron')
+const { remote, shell } = require('electron')
 const storage = require('electron-json-storage')
 const appVersion = remote.app.getVersion()
 const dialog = remote.dialog
@@ -53,17 +53,21 @@ holder.ondrop = (e) => {
 }
 
 // Settings
-function openSettings () {
+function openSettings() {
   main.openSettings()
 }
 
-function changeLocale () {
+function changeLocale() {
   var e = document.getElementById('selFlag')
   var locale = e.options[e.selectedIndex].value
   storage.set('user', {
     lang: locale
   })
   main.setUserLang(locale)
+}
+
+function goToGithub() {
+  shell.openExternal('https://github.com/jmcerrejon/subtitron')
 }
 
 storage.get('user', (error, data) => {

@@ -16,7 +16,7 @@
 
 App based on Electron to **download subtitle** files from *Opensubtitles*.
 
-**NOTE:** This is a **initial alpha release** 0.0.x. It works only with tv shows and not very accuracy.
+**NOTE:** This is a **initial alpha release** 0.0.x. It works only with tv shows and it's not very accurate.
 
 ### Features/Goals
 
